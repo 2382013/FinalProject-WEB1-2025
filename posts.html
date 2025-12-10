@@ -18,9 +18,10 @@
         font-family: 'Inter', sans-serif;
       }
 
+      /* Animasi Loading Spinner */
       .loader {
         border: 4px solid #f3f3f3;
-        border-top: 4px solid #3b82f6; 
+        border-top: 4px solid #3b82f6; /* blue-500 */
         border-radius: 50%;
         width: 40px;
         height: 40px;
@@ -36,7 +37,7 @@
           transform: rotate(360deg);
         }
       }
-
+      /* --- HEADER & TOP BAR --- */
       .top-bar {
         background-color: #f8f9fa;
         padding: 5px 20px;
@@ -68,9 +69,9 @@
       }
 
       .logo-img {
-        width: 50px;
+        width: 50px; /* Placeholder ukuran logo */
         height: 50px;
-        background-color: #ddd;
+        background-color: #ddd; /* Ganti dengan src gambar asli jika ada */
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -89,6 +90,28 @@
         text-decoration: none;
         color: #555;
         font-weight: 500;
+      }
+
+      /* Media Queries untuk Mobile Optimization */
+      @media (max-width: 768px) {
+        .top-bar {
+          padding: 5px 5px;
+          font-size: 0.75rem;
+        }
+
+        header {
+          padding: 8px 10px;
+          top: 30px;
+        }
+
+        main {
+          padding: 120px 10px 20px;
+        }
+
+        section {
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+        }
       }
     </style>
   </head>
@@ -138,54 +161,64 @@
         </div>
       </div>
 
-      <nav>
-        <ul>
+      <button
+        id="hamburger-btn"
+        class="md:hidden text-gray-600 hover:text-blue-600 transition-colors duration-300 p-2"
+      >
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+
+      <nav
+        id="nav-menu"
+        class="hidden md:flex absolute md:relative top-full md:top-auto left-0 md:left-auto right-0 md:right-auto bg-white md:bg-transparent shadow-lg md:shadow-none p-4 md:p-0 z-10"
+      >
+        <ul class="flex flex-col md:flex-row gap-4 md:gap-20">
           <li>
             <a
               href="index.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Home</a
             >
           </li>
           <li>
             <a
               href="biodata.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Biodata</a
             >
           </li>
           <li>
             <a
               href="contact_us.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Contact Us</a
             >
           </li>
           <li>
             <a
               href="posts.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Posts</a
             >
           </li>
           <li>
             <a
               href="freepage.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Mini Portofolio</a
             >
           </li>
           <li>
             <a
               href="https://fti.unai.edu/"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >FTI UNAI</a
             >
           </li>
           <li>
             <a
               href="https://unai.edu/"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >UNAI</a
             >
           </li>
@@ -358,25 +391,31 @@
 
                       const now = new Date();
 
+                      // 1. UPDATE TANGGAL (KIRI)
                       const dayName = days[now.getDay()];
                       const dayNum = now.getDate();
                       const monthName = months[now.getMonth()];
                       const year = now.getFullYear();
 
+                      // Masukkan ke elemen HTML
                       const dateString = `${dayName}, ${dayNum} ${monthName} ${year}`;
                       document.getElementById('header-date').textContent =
                         dateString;
 
-
+                      // 2. UPDATE JAM (KANAN)
+                      // Ambil waktu UTC
                       const utcHours = now.getUTCHours();
                       const utcMinutes = now.getUTCMinutes();
                       const utcSeconds = now.getUTCSeconds();
 
+                      // Hitung WIB (UTC + 7)
                       let wibHours = utcHours + 7;
-                      if (wibHours >= 24) wibHours -= 24; 
+                      if (wibHours >= 24) wibHours -= 24; // Reset jika lewat tengah malam
 
+                      // Fungsi biar angka selalu 2 digit (misal: 9 jadi 09)
                       const pad = (n) => n.toString().padStart(2, '0');
 
+                      // Format Teks Jam (spasi di antara titik dua agar mirip gambar)
                       const wibString = `${pad(wibHours)} : ${pad(
                         utcMinutes
                       )} : ${pad(utcSeconds)}`;
@@ -384,14 +423,17 @@
                         utcMinutes
                       )} : ${pad(utcSeconds)} UTC`;
 
+                      // Masukkan ke elemen HTML
                       document.getElementById('time-wib').textContent =
                         wibString;
                       document.getElementById('time-utc').textContent =
                         utcString;
                     }
 
+                    // Jalankan setiap 1 detik
                     setInterval(updateHeaderTime, 1000);
 
+                    // Panggil langsung biar gak nunggu 1 detik pas load
                     updateHeaderTime();
                   </script>
                 </p>
@@ -614,6 +656,7 @@
     </footer>
 
     <script>
+      // Fungsi Utama untuk Mengambil Data
       async function fetchPostData() {
         const nimInput = document.getElementById('nimInput').value;
         const card = document.getElementById('post-card');
@@ -621,34 +664,42 @@
         const errorMsg = document.getElementById('error-msg');
         const errorText = document.getElementById('error-text');
 
+        // 1. Validasi Input
         if (!nimInput) {
           alert('Mohon masukkan 2 digit NIM terlebih dahulu.');
           return;
         }
 
+        // Reset Tampilan (Sembunyikan kartu & error, tampilkan loading)
         card.classList.add('hidden');
         errorMsg.classList.add('hidden');
         loading.classList.remove('hidden');
 
         try {
+          // 2. Lakukan Request ke API
+          // URL dinamis: posts/ + input user
           const response = await fetch(
             `https://jsonplaceholder.typicode.com/posts/${nimInput}`
           );
 
+          // 3. Cek Status Response (404 not found, dsb)
           if (!response.ok) {
             throw new Error('Data tidak ditemukan (ID mungkin salah).');
           }
 
+          // 4. Ubah data menjadi JSON
           const data = await response.json();
 
+          // 5. Tampilkan Data ke HTML
           document.getElementById('display-id').textContent = data.id;
           document.getElementById('display-title').textContent = data.title;
           document.getElementById('display-body').textContent = data.body;
 
+          // Sembunyikan loading, tampilkan kartu
           loading.classList.add('hidden');
           card.classList.remove('hidden');
         } catch (error) {
-
+          // 6. Tangani Error
           console.error('Terjadi kesalahan:', error);
           loading.classList.add('hidden');
           errorMsg.classList.remove('hidden');
@@ -656,6 +707,18 @@
         }
       }
 
+      // Opsional: Jalankan otomatis jika user ingin default NIM (misal NIM saya 23)
+      // document.addEventListener('DOMContentLoaded', () => {
+      //     document.getElementById('nimInput').value = "23";
+      //     fetchPostData();
+      // });
+
+      // Hamburger menu toggle
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const navMenu = document.getElementById('nav-menu');
+      hamburgerBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('hidden');
+      });
     </script>
   </body>
 </html>

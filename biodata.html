@@ -17,7 +17,7 @@
       body {
         font-family: 'Inter', sans-serif;
       }
-  
+      /* --- HEADER & TOP BAR --- */
       .top-bar {
         background-color: #f8f9fa;
         padding: 5px 20px;
@@ -42,6 +42,36 @@
         background: white;
       }
 
+      /* Media Queries untuk Mobile Optimization */
+      @media (max-width: 768px) {
+        .top-bar {
+          padding: 5px 5px;
+          font-size: 0.75rem;
+        }
+
+        header {
+          padding: 8px 10px;
+          top: 30px;
+        }
+
+        main {
+          padding: 120px 10px 20px;
+        }
+
+        .temp {
+          font-size: 1.8rem;
+        }
+
+        .condition {
+          font-size: 0.8rem;
+        }
+
+        section {
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+        }
+      }
+
       .logo-section {
         display: flex;
         align-items: center;
@@ -49,9 +79,9 @@
       }
 
       .logo-img {
-        width: 50px; 
+        width: 50px; /* Placeholder logo size */
         height: 50px;
-        background-color: #ddd; 
+        background-color: #ddd; /* Replace with actual image src if available */
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -119,54 +149,64 @@
         </div>
       </div>
 
-      <nav>
-        <ul>
+      <button
+        id="hamburger-btn"
+        class="md:hidden text-gray-600 hover:text-blue-600 transition-colors duration-300 p-2"
+      >
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+
+      <nav
+        id="nav-menu"
+        class="hidden md:flex absolute md:relative top-full md:top-auto left-0 md:left-auto right-0 md:right-auto bg-white md:bg-transparent shadow-lg md:shadow-none p-4 md:p-0 z-10"
+      >
+        <ul class="flex flex-col md:flex-row gap-4 md:gap-20">
           <li>
             <a
               href="index.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Home</a
             >
           </li>
           <li>
             <a
               href="biodata.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
-              >Biodata</a
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
+              >Biography</a
             >
           </li>
           <li>
             <a
               href="contact_us.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Contact Us</a
             >
           </li>
           <li>
             <a
               href="posts.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Posts</a
             >
           </li>
           <li>
             <a
               href="freepage.html"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >Mini Portofolio</a
             >
           </li>
           <li>
             <a
               href="https://fti.unai.edu/"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >FTI UNAI</a
             >
           </li>
           <li>
             <a
               href="https://unai.edu/"
-              class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+              class="text-gray-600 hover:text-blue-600 transition-colors duration-300 block py-2 md:py-0"
               >UNAI</a
             >
           </li>
@@ -182,7 +222,7 @@
 
     <main style="max-width: 1200px; margin: 0 auto; padding: 160px 20px 40px">
       <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-800">Student Biodata</h2>
+        <h2 class="text-3xl font-bold text-gray-800">Student Biography</h2>
         <p class="text-gray-500 mt-2">
           Complete profile and web development learning reflection.
         </p>
@@ -204,7 +244,7 @@
                 class="w-full h-full object-cover"
               />
             </div>
-            <h3 class="text-xl font-bold text-gray-800">Yessica</h3>
+            <h3 class="text-xl font-bold text-gray-800">[Your Name]</h3>
             <span
               class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mt-2 font-semibold"
               >Web Developer Student</span
@@ -609,23 +649,30 @@
 
         const now = new Date();
 
+        // 1. UPDATE DATE (LEFT)
         const dayName = days[now.getDay()];
         const dayNum = now.getDate();
         const monthName = months[now.getMonth()];
         const year = now.getFullYear();
 
+        // Insert into HTML element
         const dateString = `${dayName}, ${dayNum} ${monthName} ${year}`;
         document.getElementById('header-date').textContent = dateString;
 
+        // 2. UPDATE TIME (RIGHT)
+        // Get UTC time
         const utcHours = now.getUTCHours();
         const utcMinutes = now.getUTCMinutes();
         const utcSeconds = now.getUTCSeconds();
 
+        // Calculate WIB (UTC + 7)
         let wibHours = utcHours + 7;
-        if (wibHours >= 24) wibHours -= 24; 
+        if (wibHours >= 24) wibHours -= 24; // Reset if past midnight
 
+        // Function to make numbers always 2 digits (e.g.: 9 becomes 09)
         const pad = (n) => n.toString().padStart(2, '0');
 
+        // Time Text Format (space between colons to resemble image)
         const wibString = `${pad(wibHours)} : ${pad(utcMinutes)} : ${pad(
           utcSeconds
         )}`;
@@ -633,13 +680,23 @@
           utcSeconds
         )} UTC`;
 
+        // Insert into HTML element
         document.getElementById('time-wib').textContent = wibString;
         document.getElementById('time-utc').textContent = utcString;
       }
 
+      // Run every 1 second
       setInterval(updateHeaderTime, 1000);
 
+      // Call directly so no wait 1 second on load
       updateHeaderTime();
+
+      // Hamburger menu toggle
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const navMenu = document.getElementById('nav-menu');
+      hamburgerBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('hidden');
+      });
     </script>
   </body>
 </html>
