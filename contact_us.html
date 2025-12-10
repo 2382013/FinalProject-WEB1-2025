@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,20 +18,18 @@
         font-family: 'Inter', sans-serif;
       }
 
-      /* Kelas untuk pesan error (merah) */
       .error-msg {
-        color: #ef4444; /* red-500 */
-        font-size: 0.75rem; /* text-xs */
+        color: #ef4444; 
+        font-size: 0.75rem; 
         margin-top: 0.25rem;
-        display: none; /* Sembunyi default */
+        display: none; 
       }
 
-      /* Kelas input saat error */
       .input-error {
         border-color: #ef4444 !important;
         background-color: #fef2f2;
       }
-      /* --- HEADER & TOP BAR --- */
+
       .top-bar {
         background-color: #f8f9fa;
         padding: 5px 20px;
@@ -63,9 +61,9 @@
       }
 
       .logo-img {
-        width: 50px; /* Placeholder ukuran logo */
+        width: 50px; 
         height: 50px;
-        background-color: #ddd; /* Ganti dengan src gambar asli jika ada */
+        background-color: #ddd; 
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -86,7 +84,6 @@
         font-weight: 500;
       }
 
-      /* Media Queries untuk Mobile Optimization */
       @media (max-width: 768px) {
         .top-bar {
           padding: 5px 5px;
@@ -472,31 +469,24 @@
 
                   const now = new Date();
 
-                  // 1. UPDATE TANGGAL (KIRI)
                   const dayName = days[now.getDay()];
                   const dayNum = now.getDate();
                   const monthName = months[now.getMonth()];
                   const year = now.getFullYear();
 
-                  // Masukkan ke elemen HTML
                   const dateString = `${dayName}, ${dayNum} ${monthName} ${year}`;
                   document.getElementById('header-date').textContent =
                     dateString;
 
-                  // 2. UPDATE JAM (KANAN)
-                  // Ambil waktu UTC
                   const utcHours = now.getUTCHours();
                   const utcMinutes = now.getUTCMinutes();
                   const utcSeconds = now.getUTCSeconds();
 
-                  // Hitung WIB (UTC + 7)
                   let wibHours = utcHours + 7;
-                  if (wibHours >= 24) wibHours -= 24; // Reset jika lewat tengah malam
+                  if (wibHours >= 24) wibHours -= 24; 
 
-                  // Fungsi biar angka selalu 2 digit (misal: 9 jadi 09)
                   const pad = (n) => n.toString().padStart(2, '0');
 
-                  // Format Teks Jam (spasi di antara titik dua agar mirip gambar)
                   const wibString = `${pad(wibHours)} : ${pad(
                     utcMinutes
                   )} : ${pad(utcSeconds)}`;
@@ -504,15 +494,12 @@
                     utcMinutes
                   )} : ${pad(utcSeconds)} UTC`;
 
-                  // Masukkan ke elemen HTML
                   document.getElementById('time-wib').textContent = wibString;
                   document.getElementById('time-utc').textContent = utcString;
                 }
 
-                // Jalankan setiap 1 detik
                 setInterval(updateHeaderTime, 1000);
 
-                // Panggil langsung biar gak nunggu 1 detik pas load
                 updateHeaderTime();
               </script>
             </div>
@@ -724,9 +711,8 @@
       document
         .getElementById('regForm')
         .addEventListener('submit', function (e) {
-          e.preventDefault(); // Mencegah form reload halaman
+          e.preventDefault();
 
-          // 1. Ambil semua elemen
           const fullname = document.getElementById('fullname');
           const nim = document.getElementById('nim');
           const email = document.getElementById('email');
@@ -735,7 +721,6 @@
           const dob = document.getElementById('dob');
           const address = document.getElementById('address');
 
-          // Untuk radio button, kita ambil yang checked
           const genderMale = document.querySelector(
             'input[name="gender"][value="Male"]'
           );
@@ -743,29 +728,21 @@
             'input[name="gender"][value="Female"]'
           );
 
-          // 2. Siapkan status validasi
           let isValid = true;
 
-          // Fungsi Helper untuk menampilkan error
           function showError(inputElement, errorId, message) {
             const errText = document.getElementById(errorId);
-            // Tambahkan kelas border merah ke input
             if (inputElement) inputElement.classList.add('input-error');
-            // Tampilkan pesan teks
             errText.style.display = 'block';
             if (message) errText.textContent = message;
           }
 
-          // Fungsi Helper untuk reset error (menghapus merah)
           function resetError(inputElement, errorId) {
             const errText = document.getElementById(errorId);
             if (inputElement) inputElement.classList.remove('input-error');
             errText.style.display = 'none';
           }
 
-          // --- MULAI VALIDASI ---
-
-          // A. Validasi Fullname
           if (fullname.value.trim() === '') {
             showError(fullname, 'err-fullname');
             isValid = false;
@@ -773,7 +750,6 @@
             resetError(fullname, 'err-fullname');
           }
 
-          // B. Validasi NIM
           if (nim.value.trim() === '') {
             showError(nim, 'err-nim');
             isValid = false;
@@ -781,7 +757,6 @@
             resetError(nim, 'err-nim');
           }
 
-          // C. Validasi Email (Format Regex)
           const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (email.value.trim() === '') {
             showError(email, 'err-email', 'Email harus diisi.');
@@ -797,9 +772,8 @@
             resetError(email, 'err-email');
           }
 
-          // D. Validasi Phone (Angka & Min 10 digit)
           const phoneVal = phone.value.trim();
-          const phonePattern = /^[0-9]+$/; // Regex hanya angka
+          const phonePattern = /^[0-9]+$/; 
 
           if (phoneVal === '') {
             showError(phone, 'err-phone', 'Nomor HP harus diisi.');
@@ -814,7 +788,6 @@
             resetError(phone, 'err-phone');
           }
 
-          // E. Validasi Faculty
           if (faculty.value === '') {
             showError(faculty, 'err-faculty');
             isValid = false;
@@ -822,7 +795,6 @@
             resetError(faculty, 'err-faculty');
           }
 
-          // F. Validasi DOB
           if (dob.value === '') {
             showError(dob, 'err-dob');
             isValid = false;
@@ -830,16 +802,13 @@
             resetError(dob, 'err-dob');
           }
 
-          // G. Validasi Gender (Radio)
-          // Cek apakah salah satu radio button dicentang
           if (!genderMale.checked && !genderFemale.checked) {
-            showError(null, 'err-gender'); // null karena tidak ada border input tunggal
+            showError(null, 'err-gender'); 
             isValid = false;
           } else {
             resetError(null, 'err-gender');
           }
 
-          // H. Validasi Address
           if (address.value.trim() === '') {
             showError(address, 'err-address');
             isValid = false;
@@ -847,33 +816,25 @@
             resetError(address, 'err-address');
           }
 
-          // 3. Cek Akhir
           if (isValid) {
-            // Tampilkan Pesan Sukses
             const successAlert = document.getElementById('success-alert');
             successAlert.classList.remove('hidden');
 
-            // Scroll ke atas agar pesan sukses terlihat
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Bersihkan semua field
             document.getElementById('regForm').reset();
 
-            // (Opsional) Hilangkan pesan sukses setelah 5 detik
             setTimeout(() => {
               successAlert.classList.add('hidden');
             }, 5000);
           } else {
-            // Jika error, sembunyikan pesan sukses (jika ada)
             document.getElementById('success-alert').classList.add('hidden');
           }
         });
 
-      // Fitur Tambahan: Hapus error saat user mulai mengetik (UX Improvement)
       const inputs = document.querySelectorAll('input, select, textarea');
       inputs.forEach((input) => {
         input.addEventListener('input', function () {
-          // Cari id error text terkait (contoh: id="fullname" -> id error="err-fullname")
           if (this.id) {
             const errId = 'err-' + this.id;
             const errEl = document.getElementById(errId);
@@ -885,7 +846,6 @@
         });
       });
 
-      // Hamburger menu toggle
       const hamburgerBtn = document.getElementById('hamburger-btn');
       const navMenu = document.getElementById('nav-menu');
       hamburgerBtn.addEventListener('click', () => {

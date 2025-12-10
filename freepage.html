@@ -17,7 +17,7 @@
       body {
         font-family: 'Inter', sans-serif;
       }
-      /* --- HEADER & TOP BAR --- */
+
       .top-bar {
         background-color: #f8f9fa;
         padding: 5px 20px;
@@ -49,9 +49,9 @@
       }
 
       .logo-img {
-        width: 50px; /* Placeholder ukuran logo */
+        width: 50px; 
         height: 50px;
-        background-color: #ddd; /* Ganti dengan src gambar asli jika ada */
+        background-color: #ddd; 
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -72,7 +72,7 @@
         font-weight: 500;
       }
 
-      /* Media Queries untuk Mobile Optimization */
+ 
       @media (max-width: 768px) {
         .top-bar {
           padding: 5px 5px;
@@ -556,7 +556,7 @@
     </footer>
 
     <script>
-      // --- SCRIPT JAM LIVE & TANGGAL (UPDATE) ---
+
       function updateHeaderTime() {
         const days = [
           'MINGGU',
@@ -584,30 +584,26 @@
 
         const now = new Date();
 
-        // 1. UPDATE TANGGAL (KIRI)
         const dayName = days[now.getDay()];
         const dayNum = now.getDate();
         const monthName = months[now.getMonth()];
         const year = now.getFullYear();
 
-        // Masukkan ke elemen HTML
+
         const dateString = `${dayName}, ${dayNum} ${monthName} ${year}`;
         document.getElementById('header-date').textContent = dateString;
 
-        // 2. UPDATE JAM (KANAN)
-        // Ambil waktu UTC
+
         const utcHours = now.getUTCHours();
         const utcMinutes = now.getUTCMinutes();
         const utcSeconds = now.getUTCSeconds();
 
-        // Hitung WIB (UTC + 7)
-        let wibHours = utcHours + 7;
-        if (wibHours >= 24) wibHours -= 24; // Reset jika lewat tengah malam
 
-        // Fungsi biar angka selalu 2 digit (misal: 9 jadi 09)
+        let wibHours = utcHours + 7;
+        if (wibHours >= 24) wibHours -= 24;
+
         const pad = (n) => n.toString().padStart(2, '0');
 
-        // Format Teks Jam (spasi di antara titik dua agar mirip gambar)
         const wibString = `${pad(wibHours)} : ${pad(utcMinutes)} : ${pad(
           utcSeconds
         )}`;
@@ -615,18 +611,15 @@
           utcSeconds
         )} UTC`;
 
-        // Masukkan ke elemen HTML
         document.getElementById('time-wib').textContent = wibString;
         document.getElementById('time-utc').textContent = utcString;
       }
 
-      // Jalankan setiap 1 detik
       setInterval(updateHeaderTime, 1000);
 
-      // Panggil langsung biar gak nunggu 1 detik pas load
       updateHeaderTime();
 
-      // Hamburger menu toggle
+      
       const hamburgerBtn = document.getElementById('hamburger-btn');
       const navMenu = document.getElementById('nav-menu');
       hamburgerBtn.addEventListener('click', () => {
